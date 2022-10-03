@@ -59,15 +59,15 @@ class Window:
       else:
          self.ShowWindow(icon, item)
 
-      self._isWindowVisible = not self._isWindowVisible
-
    # Define a function to show the window again
    def ShowWindow(self, icon, item):
       self._win.after(0, self._win.deiconify())
+      self._isWindowVisible = True
 
    # Hide the window and show on the system taskbar
    def HideWindow(self, icon = None, item = None):
       self._win.withdraw()
+      self._isWindowVisible = False
 
    # Register new option for the icon.
    # Call without arguments to register DELIMITER.
