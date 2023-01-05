@@ -5,6 +5,7 @@ from configReader import ConfigReader
 from components.switchToSsh import SwitchToSsh
 from components.execLauncher import ExecLauncher
 from components.createIssueTracker import CreateIssueTracker
+from components.createUserColors import CreateUserColors
 
 class Director:
     _window: Window = None
@@ -14,6 +15,8 @@ class Director:
     _switchToSsh: SwitchToSsh = None
     _execLauncher: ExecLauncher = None
     _createIssueTracker: CreateIssueTracker = None
+    _createIssueTracker: CreateIssueTracker = None
+    _createUserColors: CreateUserColors = None
 
     def __init__(self):
         # must be first
@@ -23,6 +26,7 @@ class Director:
         # Here you can register custom components
         self._switchToSsh = SwitchToSsh(self)
         self._createIssueTracker = CreateIssueTracker(self)
+        self._createUserColors = CreateUserColors(self)
         self._launchVbs = ExecLauncher(self)
         return
 

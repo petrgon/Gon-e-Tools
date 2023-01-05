@@ -1,6 +1,6 @@
 # Import the required libraries
 from tkinter import *
-import tkinter as tk
+import tkinter as tk # use QT for FE
 from pystray import Menu, MenuItem
 import pystray
 from PIL import Image, ImageTk
