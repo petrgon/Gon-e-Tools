@@ -22,25 +22,31 @@ class ExecLauncher:
 
         
         records = self._configReader.GetSection(CONFIG_SECTION_NAME)
-        
+        if records is None:
+            return
+
         self._window.Register()
         submenuItems = ()
         for record in records:
-            submenuItems += ((record, partial(self.exec, record)),)
+            execCmd = self._configReader.Get(CONFIG_SECTION_NAME, record)
+            if execCmd is None or execCmd == '':
+                submenuItems += (self._window.SEPARATOR,)
+            else:
+                submenuItems += ((record, partial(self.exec, record)),)
             
         self._window.Register(NAME, submenu = submenuItems)
         self._window.Register()
 
     def exec(self, recordName, icon, menuItem):
-        exec = self._configReader.Get(CONFIG_SECTION_NAME, recordName)
+        execCmd = self._configReader.Get(CONFIG_SECTION_NAME, recordName)
         # detaches the process from python
-        splitted = exec.split()
+        splitted = execCmd.split()
         cwd = Path(splitted[0]).parent.absolute()
-        process = subprocess.Popen(exec.split(), cwd=cwd, close_fds=True)
-        text = f"Launched: '{exec}'"
+        process = subprocess.Popen(execCmd.split(), cwd=cwd, close_fds=True)
+        text = f"Launched: '{execCmd}'"
         self.tprint(text)
         self._window.Notify(text, NAME)
-        thread = threading.Thread(target=partial(self._wait, process, exec), daemon=True)
+        thread = threading.Thread(target=partial(self._wait, process, execCmd), daemon=True)
         thread.start()
 
     def tprint(self, text):

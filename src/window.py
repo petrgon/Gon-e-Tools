@@ -11,6 +11,8 @@ import constants
 
 # UI for the app, defines Tray Icon and Window
 class Window:
+   SEPARATOR = pystray.Menu.SEPARATOR
+
    _win = None
    _registeredOptions = None
    _text = None
@@ -36,8 +38,8 @@ class Window:
       
       self._registeredOptions = (
          MenuItem('Hidden Default', self.ToggleWindow, default = True, visible = False), 
-         MenuItem('Quit', self.QuitWindow), 
-         MenuItem('Show Log', self.ShowWindow), 
+         MenuItem('Quit', self.QuitWindow),
+         MenuItem('Show Log', self.ShowWindow),
          pystray.Menu.SEPARATOR
          )
 
@@ -78,7 +80,7 @@ class Window:
 
       item = None
       if callable == None and name == None:
-         item= pystray.Menu.SEPARATOR
+         item = pystray.Menu.SEPARATOR
       elif not submenuItems == None:
          item = MenuItem(name, Menu(*submenuItems))
       else:
@@ -125,5 +127,8 @@ class Window:
       if not input == None:
          items = ()
          for item in input:
-            items += (MenuItem(item[0], item[1]),)
+            if item == self.SEPARATOR:
+               items += (item,)
+            else:
+               items += (MenuItem(item[0], item[1]),)
       return items

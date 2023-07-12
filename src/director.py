@@ -21,7 +21,7 @@ class Director:
     def __init__(self):
         # must be first
         self._window = Window()
-        self._configReader = ConfigReader()
+        self._configReader = ConfigReader(self)
 
         # Here you can register custom components
         self._switchToSsh = SwitchToSsh(self)

@@ -33,7 +33,8 @@ class CreateUserColors:
 """
 
         execFolder = Path(self._configReader.Get(CONFIG_SECTION_NAME, CONFIG_KEY_NAME))
-        self._window.Notify(f"Launched", NAME)
+        self._window.Notify("Launched", NAME)
+        self._window.Log(helper.tlog(NAME, "Started"))
         path: Path
         for path in execFolder.rglob(".git"):
             if path.is_dir() and path.name == ".git":
@@ -47,4 +48,5 @@ class CreateUserColors:
                     fp.write(data)
                     self._window.Log(helper.tlog(NAME, f"Wrote to {path.parent.name}"))
         
-        self._window.Notify(f"Finished", NAME)
+        self._window.Log(helper.tlog(NAME, "Done"))
+        self._window.Notify("Finished", NAME)
