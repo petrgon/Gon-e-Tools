@@ -62,7 +62,7 @@ class Window:
          self.ShowWindow(icon, item)
 
    # Define a function to show the window again
-   def ShowWindow(self, icon, item):
+   def ShowWindow(self, icon = None, item = None):
       self._win.after(0, self._win.deiconify())
       self._isWindowVisible = True
 

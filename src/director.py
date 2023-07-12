@@ -6,6 +6,7 @@ from components.switchToSsh import SwitchToSsh
 from components.execLauncher import ExecLauncher
 from components.createIssueTracker import CreateIssueTracker
 from components.createUserColors import CreateUserColors
+from components.printVersion import PrintVersion
 
 class Director:
     _window: Window = None
@@ -17,6 +18,7 @@ class Director:
     _createIssueTracker: CreateIssueTracker = None
     _createIssueTracker: CreateIssueTracker = None
     _createUserColors: CreateUserColors = None
+    _printVersion: PrintVersion = None
 
     def __init__(self):
         # must be first
@@ -27,6 +29,7 @@ class Director:
         self._switchToSsh = SwitchToSsh(self)
         self._createIssueTracker = CreateIssueTracker(self)
         self._createUserColors = CreateUserColors(self)
+        self._printVbsVersion = PrintVersion(self)
         self._launchVbs = ExecLauncher(self)
         return
 
