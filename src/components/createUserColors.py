@@ -5,13 +5,13 @@ import os
 
 from window import Window
 from configReader import ConfigReader
-import helper
+from helper import tlog
 
 
 FOLDER = Path(__file__).parent
 NAME = "Create User Colors"
 CONFIG_SECTION_NAME = "createusercolors"
-CONFIG_KEY_NAME = "lookuppath"
+CONFIG_KEY_LOOKUP = "lookuppath"
 
 class CreateUserColors:
     _window: Window = None
@@ -27,14 +27,30 @@ class CreateUserColors:
         thread.start()
         
     def _Exec(self):
-        data = """
-# Highlight users
+        records = self._configReader.GetSection(CONFIG_SECTION_NAME)
+        if records is None:
+            return
+    
+        foundAny = False;
+        data = "# Highlight users"
+        for record in records:
+            if record == CONFIG_KEY_LOOKUP:
+                continue
 
-"""
+            foundAny = True
+            color = self._configReader.Get(CONFIG_SECTION_NAME, record)
+            if color is not None or color != "":
+                data += f"\n{record} {color}"
 
-        execFolder = Path(self._configReader.Get(CONFIG_SECTION_NAME, CONFIG_KEY_NAME))
+        if foundAny == False:
+            text = f"{NAME} is not configured properly"
+            self._window.Notify(text, NAME)
+            self._window.Log(tlog(NAME, text))
+
+        execFolder = Path(self._configReader.Get(CONFIG_SECTION_NAME, CONFIG_KEY_LOOKUP))
         self._window.Notify("Launched", NAME)
-        self._window.Log(helper.tlog(NAME, "Started"))
+        self._window.Log(tlog(NAME, f"Using:\n{data}"))
+        self._window.Log(tlog(NAME, "Started"))
         path: Path
         for path in execFolder.rglob(".git"):
             if path.is_dir() and path.name == ".git":
@@ -42,11 +58,11 @@ class CreateUserColors:
                 try:
                     os.makedirs(dir, exist_ok=True)
                 except OSError as error:
-                    self._window.Log(helper.tlog(NAME, f"Unable to create {dir.name} because of {error}"))
+                    self._window.Log(tlog(NAME, f"Unable to create {dir.name} because of {error}"))
                 file = dir / "user-colors"
                 with file.open(mode="w") as fp:
                     fp.write(data)
-                    self._window.Log(helper.tlog(NAME, f"Wrote to {path.parent.name}"))
+                    self._window.Log(tlog(NAME, f"Wrote to {path.parent.name}"))
         
-        self._window.Log(helper.tlog(NAME, "Done"))
+        self._window.Log(tlog(NAME, "Done"))
         self._window.Notify("Finished", NAME)

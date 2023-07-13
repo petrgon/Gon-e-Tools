@@ -20,7 +20,6 @@ class ExecLauncher:
         self._window = director._window
         self._configReader = director._configReader
 
-        
         records = self._configReader.GetSection(CONFIG_SECTION_NAME)
         if records is None:
             return
@@ -30,7 +29,7 @@ class ExecLauncher:
         for record in records:
             execCmd = self._configReader.Get(CONFIG_SECTION_NAME, record)
             if execCmd is None or execCmd == '':
-                submenuItems += (self._window.SEPARATOR,)
+                submenuItems += (None,)
             else:
                 submenuItems += ((record, partial(self.exec, record)),)
             

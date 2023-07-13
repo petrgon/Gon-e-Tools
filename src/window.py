@@ -11,8 +11,6 @@ import constants
 
 # UI for the app, defines Tray Icon and Window
 class Window:
-   SEPARATOR = pystray.Menu.SEPARATOR
-
    _win = None
    _registeredOptions = None
    _text = None
@@ -124,11 +122,11 @@ class Window:
 
    def _UnpackSubmenu(self, input = None):
       items = None
-      if not input == None:
+      if input != None:
          items = ()
          for item in input:
-            if item == self.SEPARATOR:
-               items += (item,)
+            if item == None:
+               items += (pystray.Menu.SEPARATOR,)
             else:
                items += (MenuItem(item[0], item[1]),)
       return items
