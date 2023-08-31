@@ -1,11 +1,11 @@
 # Gon(e) Tools
 This utility provides multiple tools.
 
-All component must be configured in `config.ini` file. See the documentation in the file.
+All components must be configured in the `config.ini` file. Please take a look at the documentation in the file.
 
 ## Components
 ### Switch to SSH
-This utility goes through all folders in current directory and expects that each directory is GIT repository. It checks for each if the origin is set to BISIM SSH. If it is set to HTTPS it changes it to SSH.
+This utility goes through all folders in the current directory and expects that each directory is a GIT repository. It checks for each if the origin is set to `gitlab_url` SSH. If it is set to HTTPS it changes it to SSH.
 
 Author: Petr Gondek
 
