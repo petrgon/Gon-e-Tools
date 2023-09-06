@@ -8,6 +8,7 @@ import threading
 from os import system
 
 import constants
+from helper import GetAbsoluteResourcePath
 
 # UI for the app, defines Tray Icon and Window
 class Window:
@@ -23,7 +24,7 @@ class Window:
       # Create an instance of tkinter frame or window
       self._win=Tk()
       self._win.title(constants.APP_NAME)
-      self._win.iconbitmap(constants.ICON_PATH)
+      self._win.iconbitmap(GetAbsoluteResourcePath(constants.ICON_PATH))
 
       system("title " + constants.APP_NAME)
 
@@ -116,7 +117,7 @@ class Window:
    # Inits icon if not yet initialized
    def _InitIcon(self):
       if self._icon == None:
-         image = Image.open(constants.ICON_PATH)
+         image = Image.open(GetAbsoluteResourcePath(constants.ICON_PATH))
          menu = self._registeredOptions
          self._icon = pystray.Icon(constants.APP_NAME, image, constants.APP_NAME, menu)
 

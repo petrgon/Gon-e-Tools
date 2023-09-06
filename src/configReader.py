@@ -1,6 +1,9 @@
 import configparser
-from helper import tlog
+from helper import tlog, GetAbsoluteResourcePath
 from window import Window
+import shutil
+import os.path
+
 
 CONFIG_PATH = "config.ini"
 
@@ -10,6 +13,9 @@ class ConfigReader:
 
     def __init__(self, director):
         self._window = director._window
+        if not os.path.isfile(CONFIG_PATH):
+            shutil.copyfile(GetAbsoluteResourcePath(CONFIG_PATH), CONFIG_PATH)
+
         return None
 
     def GetSection(self, section):
