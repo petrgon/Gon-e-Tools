@@ -58,4 +58,5 @@ url = "{url}$1"
                         fp.write(data)
                         self._window.Log(helper.tlog(NAME, f"Wrote to {path.parent.name}"))
             
+        self._window.Log(helper.tlog(NAME, "Done"))
         self._window.Notify("Finished", NAME)
