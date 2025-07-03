@@ -1,1 +1,0 @@
-START "" pythonw src/main.py
